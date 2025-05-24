@@ -1,22 +1,15 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
+	"github.com/gofiber/fiber/v2"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintln(w, "Future Capsule API running")
-}
-
 func main() {
-	http.HandleFunc("/", handler)
+	app := fiber.New()
 
-	fmt.Println("Sever is running on port 8080")
-	err := http.ListenAndServe(":8080", nil)
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Future Capsule API (Fiber) running")
+	})
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	app.Listen(":8080")
 }
